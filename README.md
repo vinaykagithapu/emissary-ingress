@@ -44,8 +44,8 @@ kubectl apply -f webapp2/deploy-httpd.yaml
 ## Install Emissary-Ingress Using Helm
 1. Clone the project
 ```
-git clone <url/project>
-cd project
+git clone https://github.com/vinaykagithapu/emissary-ingress.git
+cd emissary-ingress
 ```
 2. Add datawire helm repo
 ```
