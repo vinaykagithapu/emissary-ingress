@@ -81,11 +81,11 @@ metadata:
       ---
       apiVersion: getambassador.io/v3alpha1
       kind: Mapping
-      name: aiq-mapping
-      prefix: /aiq/api/
-      rewrite: /api/
+      name: web3-mapping
+      prefix: /web3/
+      #rewrite: /api/
       timeout_ms: 300000
-      service: aiq:80
+      service: web3-svc:80
 
 ```
 
