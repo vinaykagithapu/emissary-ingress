@@ -95,9 +95,13 @@ kubectl apply -f ingress.yaml
 ```
 kubectl apply -f backendconfig.yaml
 ``` 
-3. Then edit emissary-ingress.yaml file to add an annotation referencing the BackendConfig and apply the file
+3. Then edit emissary-ingress.yaml file to add an annotation referencing the BackendConfig and apply the file.
 ```
 kubectl edit service/emissary-ingress -n emissary
+```
+below is the annotation need to add
+```shell
+cloud.google.com/backend-config: '{"default": "ambassador-hc-config"}'
 ```
 
 ## Access the web services via internal-lb and emissary-ingress
