@@ -32,27 +32,28 @@ kind create cluster
 ```
 
 ## Deploy 2 Web Apps
-1. Deploy nginx-web app and service
-```
-kubectl apply -f webapp1/deploy-nginx.yaml
-```
-2. Deploy httpd-web app and service in httpd namespace
-```
-kubectl apply -f webapp2/deploy-httpd.yaml
-```
-
-## Install Emissary-Ingress Using Helm
 1. Clone the project
 ```
 git clone https://github.com/vinaykagithapu/emissary-ingress.git
 cd emissary-ingress
 ```
-2. Add datawire helm repo
+2. Deploy nginx-web app and service
+```
+kubectl apply -f webapp1/deploy-nginx.yaml
+```
+3. Deploy httpd-web app and service in httpd namespace
+```
+kubectl apply -f webapp2/deploy-httpd.yaml
+```
+
+## Install Emissary-Ingress Using Helm
+
+1. Add datawire helm repo
 ```
 helm repo add datawire https://app.getambassador.io
 helm repo update
 ```
-3. Create namespace and install
+2. Create namespace and install
 ```
 kubectl create namespace emissary && \
 kubectl apply -f emissary-crds.yaml
@@ -60,7 +61,7 @@ kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext 
 helm install emissary-ingress --namespace emissary datawire/emissary-ingress -f emissary-values.yaml && \
 kubectl -n emissary wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary-ingress
 ```
-4. Create listener for all namespaces
+3. Create listener for all namespaces
 ```
 kubectl apply -f listener.yaml
 ```
