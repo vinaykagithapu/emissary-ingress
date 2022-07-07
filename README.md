@@ -90,6 +90,21 @@ metadata:
 
 ```
 
+## Access the web services via emissary-ingress
+1. port-forward the emissary-ingress service
+```
+kubectl -n emissary port-forward service/emissary-ingress 8888:80
+```
+2. visit the niginx web service 
+```
+http://127.0.0.1:8888/app1/
+```
+3. visit the httpd web service 
+```
+http://127.0.0.1:8888/app2/
+```
+
+
 # Destroy Setup
 ```
 kubectl delete -f webapp2/mapping-httpd.yaml
