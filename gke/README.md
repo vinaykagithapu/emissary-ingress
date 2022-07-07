@@ -30,28 +30,28 @@ scaling and resiliency. For more on Emissary's architecture and motivation, read
 
 ## Deploy 2 Web Apps
 1. Clone the project
-```
+```shell
 git clone https://github.com/vinaykagithapu/emissary-ingress.git
 cd emissary-ingress/gke/
 ```
 2. Deploy nginx-web app and service
-```
+```shell
 kubectl apply -f webapp1/deploy-nginx.yaml
 ```
 3. Deploy httpd-web app and service in httpd namespace
-```
+```shell
 kubectl apply -f webapp2/deploy-httpd.yaml
 ```
 
 ## Install Emissary-Ingress Using Helm
 
 1. Add datawire helm repo
-```
+```shell
 helm repo add datawire https://app.getambassador.io
 helm repo update
 ```
 2. Create namespace and install
-```
+```shell
 kubectl create namespace emissary && \
 kubectl apply -f emissary-crds.yaml
 kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
@@ -59,18 +59,18 @@ helm install emissary-ingress --namespace emissary datawire/emissary-ingress -f 
 kubectl -n emissary wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary-ingress
 ```
 3. Create listener for all namespaces
-```
+```shell
 kubectl apply -f listener.yaml
 ```
 ## Mapping Services
 1. Mapping can be done in 2 ways, within the service or using mapping 
 2. Create mapping resources for two services
-```
+```shell
 kubectl apply -f webapp1/mapping-nginx.yaml
 kubectl apply -f webapp2/mapping-httpd.yaml
 ```
 3. An example of mapping within the service looks like below
-```
+```shell
 apiVersion: v1
 kind: Service
 metadata:
@@ -88,15 +88,15 @@ metadata:
 ```
 ## Setup Internal Ingress 
 1. Create ingress with gcp internal loadbalancer(https), it required ssl certificate. Before create ingress, create ssl certificate and configure it in ingress.yaml file
-```
+```shell
 kubectl apply -f ingress.yaml
 ``` 
 2. Configure BackendConfig for health checks
-```
+```shell
 kubectl apply -f backendconfig.yaml
 ``` 
 3. Then edit emissary-ingress.yaml file to add an annotation referencing the BackendConfig and apply the file.
-```
+```shell
 kubectl edit service/emissary-ingress -n emissary
 ```
 below is the annotation need to add
@@ -106,21 +106,21 @@ cloud.google.com/backend-config: '{"default": "ambassador-hc-config"}'
 
 ## Access the web services via internal-lb and emissary-ingress
 1. Get the ip address of loadbalancer/ingress
-```
+```shell
 kubectl get ing -n emissary
 ```
 2. visit the niginx web service 
-```
+```shell
 https://<lb-ipAddress>/app1/
 ```
 3. visit the httpd web service 
-```
+```shell
 http://<lb-ipAddress>/app2/
 ```
 
 
 # Destroy Setup
-```
+```shell
 kubectl delete -f backendconfig.yaml
 kubectl delete -f ingress.yaml
 kubectl delete -f webapp2/mapping-httpd.yaml
