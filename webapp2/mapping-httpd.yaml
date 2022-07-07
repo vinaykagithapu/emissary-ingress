@@ -1,8 +1,0 @@
-apiVersion: getambassador.io/v3alpha1
-kind: Mapping
-metadata:
-  name: httpd-web-mapping
-spec:
-  hostname: "*"
-  prefix: /app2/
-  service: httpd-web-svc.httpd
