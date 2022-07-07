@@ -35,7 +35,7 @@ kind create cluster
 1. Clone the project
 ```
 git clone https://github.com/vinaykagithapu/emissary-ingress.git
-cd emissary-ingress
+cd emissary-ingress/kind
 ```
 2. Deploy nginx-web app and service
 ```
